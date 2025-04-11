@@ -1,0 +1,239 @@
+:root {
+    --low-risk: #2ecc71;
+    --moderate-risk: #f39c12;
+    --high-risk: #e74c3c;
+    --flood-color: #3498db;
+    --fire-color: #e67e22;
+    --storm-color: #9b59b6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #2c3e50;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 25px;
+    overflow: hidden;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#location-input {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+#location-input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+#search-btn {
+    padding: 0 30px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+#search-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.current-weather {
+    grid-column: 1 / -1;
+}
+
+.weather-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.weather-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+.weather-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.weather-card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.weather-card span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.risk-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.risk-card, .ai-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+#risk-indicator {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    color: white;
+}
+
+.low-risk {
+    background: var(--low-risk);
+}
+
+.moderate-risk {
+    background: var(--moderate-risk);
+}
+
+.high-risk {
+    background: var(--high-risk);
+}
+
+.risk-bars {
+    margin-top: 20px;
+}
+
+.risk-bar {
+    margin-bottom: 15px;
+}
+
+.risk-bar span {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.risk-bar .bar {
+    height: 25px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.risk-bar .bar span {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 0.9rem;
+}
+
+.flood .bar {
+    background: var(--flood-color);
+}
+
+.fire .bar {
+    background: var(--fire-color);
+}
+
+.storm .bar {
+    background: var(--storm-color);
+}
+
+.map-container, .history-container {
+    grid-column: 1 / -1;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+#map {
+    height: 400px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#history-chart {
+    width: 100%;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .risk-section {
+        grid-template-columns: 1fr;
+    }
+}

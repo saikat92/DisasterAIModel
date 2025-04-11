@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Prediction Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌪️ Disaster Prediction Pro</h1>
+            <p class="subtitle">NASA POWER + OpenWeatherMap Integration</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="location-input" placeholder="Enter city (e.g., London)" autocomplete="off">
+            <button id="search-btn">Analyze</button>
+        </div>
+
+        <div class="dashboard">
+            <div class="current-weather">
+                <h2 id="location-name">Search a location</h2>
+                <div class="weather-grid">
+                    <div class="weather-card">
+                        <h3>Temparature</h3>
+                        <span id="temp">-</span>
+                    </div>
+                    <div class="weather-card">
+                        <h3>Humidity</h3>
+                        <span id="humidity">-</span>
+                    </div>
+                    <div class="weather-card">
+                        <h3>Wind</h3>
+                        <span id="wind">-</span>
+                    </div>
+                    <div class="weather-card">
+                        <h3>Rain</h3>
+                        <span id="rain">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="risk-section">
+                <div class="risk-card">
+                    <h3>Risk Level</h3>
+                    <div id="risk-indicator" class="low-risk">Low</div>
+                </div>
+                <div class="ai-card">
+                    <h3>AI Analysis</h3>
+                    <p id="ai-message">No data analyzed yet</p>
+                    <div class="risk-bars">
+                        <div class="risk-bar flood">
+                            <span>Flood</span>
+                            <div class="bar"><span id="flood-risk">0%</span></div>
+                        </div>
+                        <div class="risk-bar fire">
+                            <span>Wildfire</span>
+                            <div class="bar"><span id="fire-risk">0%</span></div>
+                        </div>
+                        <div class="risk-bar storm">
+                            <span>Storm</span>
+                            <div class="bar"><span id="storm-risk">0%</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <h3>Risk Visualization</h3>
+                <div id="map"></div>
+            </div>
+
+            <div class="history-container">
+                <h3>7-Day History (NASA POWER)</h3>
+                <canvas id="history-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.18.0/dist/tf.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- App Code -->
+    <script src="ai-model.js"></script>
+    <script src="script1.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="startTraining()">Train Model</button>
+<script>
+    async function startTraining() 
+    {
+        disasterModel = await createAndTrainModel();
+        alert("Model trained and ready!");
+    }
+
+
+    async function handlePrediction() {
+        if (!disasterModel) {
+            alert("Model not trained yet!");
+            return;
+        }
+
+            const inputData = {
+                temp: 30,
+                humidity: 60,
+                pressure: 101.2,
+                wind_speed: 5.4,
+                rain: 1.2
+            };
+
+            const result = await predictDisaster(disasterModel, inputData);
+            console.log("Prediction:", result);
+    }
+
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.18.0/dist/tf.min.js"></script>
+
+<script src="ai-model.js"></script>
+
+</body>
+</html>
