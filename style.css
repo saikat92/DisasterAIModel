@@ -5,6 +5,10 @@
     --flood-color: #3498db;
     --fire-color: #e67e22;
     --storm-color: #9b59b6;
+    --heatwave-color: #e74c3c;
+    --urban-flood-color: #2980b9;
+    --default-card-bg: #f8f9fa;
+    --highlight-color: #3498db;
 }
 
 * {
@@ -38,10 +42,21 @@ header {
     border-bottom: 1px solid #ecf0f1;
 }
 
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
 h1 {
     font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.3rem;
 }
 
 .subtitle {
@@ -65,14 +80,14 @@ h1 {
 }
 
 #location-input:focus {
-    border-color: #3498db;
+    border-color: var(--highlight-color);
     outline: none;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 #search-btn {
     padding: 0 30px;
-    background: #3498db;
+    background: var(--highlight-color);
     color: white;
     border: none;
     border-radius: 8px;
@@ -87,6 +102,12 @@ h1 {
     transform: translateY(-2px);
 }
 
+#search-btn:disabled {
+    background: #95a5a6;
+    transform: none;
+    cursor: not-allowed;
+}
+
 .dashboard {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -95,23 +116,33 @@ h1 {
 
 .current-weather {
     grid-column: 1 / -1;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+#location-name {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
 }
 
 .weather-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
 
 .weather-card {
-    background: #f8f9fa;
+    background: var(--default-card-bg);
     border-radius: 10px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.3s;
+    transition: all 0.3s;
 }
 
 .weather-card:hover {
@@ -119,9 +150,9 @@ h1 {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.weather-card img {
-    width: 50px;
-    height: 50px;
+.weather-card h3 {
+    font-size: 1rem;
+    color: #7f8c8d;
     margin-bottom: 10px;
 }
 
@@ -129,6 +160,12 @@ h1 {
     font-size: 1.5rem;
     font-weight: bold;
     color: #2c3e50;
+}
+
+.weather-card small {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 5px;
 }
 
 .risk-section {
@@ -166,6 +203,15 @@ h1 {
     background: var(--high-risk);
 }
 
+#ai-message {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
 .risk-bars {
     margin-top: 20px;
 }
@@ -174,10 +220,11 @@ h1 {
     margin-bottom: 15px;
 }
 
-.risk-bar span {
+.risk-bar span:first-child {
     display: block;
     margin-bottom: 5px;
     font-weight: 500;
+    color: #2c3e50;
 }
 
 .risk-bar .bar {
@@ -186,6 +233,7 @@ h1 {
     border-radius: 5px;
     overflow: hidden;
     position: relative;
+    transition: width 0.5s ease;
 }
 
 .risk-bar .bar span {
@@ -195,6 +243,7 @@ h1 {
     transform: translateY(-50%);
     color: white;
     font-size: 0.9rem;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
 .flood .bar {
@@ -221,13 +270,35 @@ h1 {
     height: 400px;
     border-radius: 8px;
     margin-top: 15px;
+    border: 1px solid #ecf0f1;
 }
 
 #history-chart {
     width: 100%;
+    height: 300px;
     margin-top: 15px;
 }
 
+/* Loading animation */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.loading {
+    animation: pulse 1.5s infinite;
+    color: #7f8c8d;
+}
+
+/* Tooltip styles */
+.leaflet-tooltip {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .dashboard {
         grid-template-columns: 1fr;
@@ -235,5 +306,31 @@ h1 {
     
     .risk-section {
         grid-template-columns: 1fr;
+    }
+    
+    .weather-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+    
+    #map {
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .search-box {
+        flex-direction: column;
+    }
+    
+    #search-btn {
+        padding: 12px;
     }
 }

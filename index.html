@@ -24,8 +24,9 @@
                 <h2 id="location-name">Search a location</h2>
                 <div class="weather-grid">
                     <div class="weather-card">
-                        <h3>Temparature</h3>
+                        <h3>Temperature</h3>
                         <span id="temp">-</span>
+                        <small id="feels_like">-</small>
                     </div>
                     <div class="weather-card">
                         <h3>Humidity</h3>
@@ -38,6 +39,14 @@
                     <div class="weather-card">
                         <h3>Rain</h3>
                         <span id="rain">-</span>
+                    </div>
+                    <div class="weather-card">
+                        <h3>Pressure</h3>
+                        <span id="pressure">-</span>
+                    </div>
+                    <div class="weather-card">
+                        <h3>Elevation</h3>
+                        <span id="elevation">-</span>
                     </div>
                 </div>
             </div>
@@ -80,14 +89,12 @@
     </div>
 
     <!-- Libraries -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.18.0/dist/tf.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <!-- App Code -->
     <script src="ai-model.js"></script>
-    <script src="script1.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
