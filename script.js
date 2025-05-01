@@ -12,6 +12,7 @@ const elements = {
     searchBtn: document.getElementById("search-btn"),
     locationName: document.getElementById("location-name"),
     temp: document.getElementById("temp"),
+    feelsLike:document.getElementById("feelsLike"),
     humidity: document.getElementById("humidity"),
     wind: document.getElementById("wind"),
     rain: document.getElementById("rain"),
@@ -21,14 +22,36 @@ const elements = {
     aiMessage: document.getElementById("ai-message"),
     floodRisk: document.getElementById("flood-risk"),
     fireRisk: document.getElementById("fire-risk"),
-    stormRisk: document.getElementById("storm-risk")
+    stormRisk: document.getElementById("storm-risk"),
+    resetBtn: document.getElementById("reset-btn"),
+    refreshBtn: document.getElementById("refresh-btn"),
+    loadingIndicator: document.getElementById("loading-indicator"),
+    loadingText: document.getElementById("loading-text")
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-    disasterModel = await window.trainModel();
-    console.log("AI model loaded");
+    elements.loadingIndicator.classList.add("visible");
+    elements.loadingText.textContent = "AI model loading...";
     
+    try {
+        disasterModel = await window.trainModel();
+        console.log("AI model loaded");
+        elements.loadingText.textContent = "AI model loaded! Ready to analyze";
+        
+        // Hide loading after delay
+        setTimeout(() => {
+            elements.loadingIndicator.classList.remove("visible");
+        }, 2000);
+    } catch (error) {
+        elements.loadingText.textContent = "Error loading AI model";
+        console.error("Model loading failed:", error);
+    }
+    
+    // Event listeners
     elements.searchBtn.addEventListener("click", handleSearch);
+    elements.resetBtn.addEventListener("click", resetApp);
+    elements.refreshBtn.addEventListener("click", () => location.reload(true));
+    
     elements.locationInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") handleSearch();
     });
@@ -44,7 +67,9 @@ async function handleSearch() {
         
         // Get coordinates and elevation first
         currentLocation = await getCoordinates(location);
+        // console.log(currentLocation);
         currentLocation.elevation = await getElevation(currentLocation.lat, currentLocation.lon);
+        // console.log(currentLocation.elevation);
         
         // Fetch all data in parallel
         const [currentWeather, historicalData] = await Promise.all([
@@ -52,11 +77,15 @@ async function handleSearch() {
             fetchNASAData(currentLocation)
         ]);
 
+        // console.log(currentWeather);
+        // console.log(historicalData);
+
         updateCurrentWeatherUI(currentWeather);
         updateHistoricalChart(historicalData);
 
         // Get current month and hour
         const now = new Date();
+        console.log(now);
         const prediction = await window.predictDisaster(
             disasterModel,
             {
@@ -104,14 +133,13 @@ async function getCoordinates(location) {
     };
 }
 
+
 async function getElevation(lat, lon) {
-    // Using OpenTopoData API
-    const response = await fetch(
-        `https://api.opentopodata.org/v1/aster30m?locations=${lat},${lon}`
-    );
-    const data = await response.json();
+    const res = await fetch(`http://localhost:3000/elevation?lat=${lat}&lon=${lon}`);
+    const data = await res.json();
     return data.results[0].elevation;
-}
+  }
+  
 
 async function fetchCurrentWeather(location) {
     const response = await fetch(
@@ -310,4 +338,47 @@ function updateRiskMap(coords, prediction) {
     addRiskCircle('Flood', prediction.flood, '#3498db');
     addRiskCircle('Wildfire', prediction.wildfire, '#e67e22');
     addRiskCircle('Storm', prediction.storm, '#9b59b6');
+}
+
+function resetApp() {
+    // Clear inputs
+    elements.locationInput.value = "";
+    
+    // Reset UI elements
+    elements.locationName.textContent = "Search a location";
+    elements.temp.textContent = "-";
+    elements.feelsLike.textContent = "-";
+    elements.humidity.textContent = "-";
+    elements.wind.textContent = "-";
+    elements.rain.textContent = "-";
+    elements.pressure.textContent = "-";
+    elements.elevation.textContent = "-";
+    
+    // Reset risk indicators
+    elements.riskIndicator.textContent = "Low";
+    elements.riskIndicator.className = "low-risk";
+    elements.aiMessage.textContent = "No data analyzed yet";
+    elements.floodRisk.textContent = "0%";
+    elements.fireRisk.textContent = "0%";
+    elements.stormRisk.textContent = "0%";
+    
+    // Reset bars
+    document.querySelector(".flood .bar").style.width = "0%";
+    document.querySelector(".fire .bar").style.width = "0%";
+    document.querySelector(".storm .bar").style.width = "0%";
+    
+    // Reset map
+    if (map) {
+        map.eachLayer(layer => {
+            if (layer instanceof L.Circle) map.removeLayer(layer);
+        });
+    }
+    
+    // Reset chart
+    if (weatherChart) {
+        weatherChart.destroy();
+        weatherChart = null;
+    }
+    
+    console.log("Application reset");
 }

@@ -17,6 +17,12 @@
         <div class="search-box">
             <input type="text" id="location-input" placeholder="Enter city (e.g., London)" autocomplete="off">
             <button id="search-btn">Analyze</button>
+            <button id="reset-btn" class="secondary-btn">Reset</button>
+            <button id="refresh-btn" class="secondary-btn">Refresh Page</button>
+        </div>
+        <div id="loading-indicator" class="loading-indicator">
+            <div class="spinner"></div>
+            <span id="loading-text">AI model loading...</span>
         </div>
 
         <div class="dashboard">
@@ -26,7 +32,8 @@
                     <div class="weather-card">
                         <h3>Temperature</h3>
                         <span id="temp">-</span>
-                        <small id="feels_like">-</small>
+                        
+                        <small id="feelsLike">-</small>
                     </div>
                     <div class="weather-card">
                         <h3>Humidity</h3>

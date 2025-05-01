@@ -99,7 +99,7 @@ async function createAndTrainModel() {
     // Load and train
     const { features, labels } = await loadTrainingData();
     await model.fit(features, labels, {
-        epochs: 150,
+        epochs: 10,
         batchSize: 32,
         validationSplit: 0.2,
         callbacks: {

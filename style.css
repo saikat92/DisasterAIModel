@@ -333,4 +333,59 @@ h3 {
     #search-btn {
         padding: 12px;
     }
+    /* Add these styles */
+.secondary-btn {
+    padding: 0 20px;
+    background: #95a5a6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.secondary-btn:hover {
+    background: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.loading-indicator.visible {
+    opacity: 1;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(52, 152, 219, 0.3);
+    border-radius: 50%;
+    border-top-color: #3498db;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#search-btn.analyzing {
+    background: #f39c12;
+}
+
+#search-btn.analyzing:hover {
+    background: #e67e22;
+    transform: none;
+    cursor: wait;
+}
 }
