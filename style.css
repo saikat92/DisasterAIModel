@@ -85,7 +85,7 @@ h3 {
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
-#search-btn {
+#search-btn, #reset-btn, #refresh-btn {
     padding: 0 30px;
     background: var(--highlight-color);
     color: white;
@@ -101,6 +101,17 @@ h3 {
     background: #2980b9;
     transform: translateY(-2px);
 }
+
+#reset-btn:hover {
+    background: #ff6601;
+    transform: translateY(-2px);
+}
+
+#refresh-btn:hover {
+    background: #09ceb4;
+    transform: translateY(-2px);
+}
+
 
 #search-btn:disabled {
     background: #95a5a6;
